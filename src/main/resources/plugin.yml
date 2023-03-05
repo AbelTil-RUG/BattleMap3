@@ -1,0 +1,14 @@
+name: BattleMap
+version: '${project.version}'
+main: me.cyclingman.battlemap.BattleMap
+api-version: 1.19
+authors: [Cyclingman]
+description: Team based pvp game modes
+commands:
+  kit:
+    description: Select a kit
+    usage: /<command> [kitname]
+  menu:
+    description: Open the menu
+  controlPoint:
+    description: Create a new control point.
