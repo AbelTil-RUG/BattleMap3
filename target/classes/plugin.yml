@@ -5,10 +5,10 @@ api-version: 1.19
 authors: [Cyclingman]
 description: Team based pvp game modes
 commands:
-  kit:
-    description: Select a kit
-    usage: /<command> [kitname]
-  menu:
-    description: Open the menu
+  saves:
+    description: loader and saver
+    usage: either /saves save or /saves load
+
   controlPoint:
     description: Create a new control point.
+    usage: /<command> create [name] [radius] [captureTime] [mapNumber] OR /controlpoint modify name/radius/captureTime/mapNumber [value]

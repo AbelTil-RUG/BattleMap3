@@ -1,56 +1,70 @@
-package me.cyclingman.battlemap.gamemodes;
+package me.cyclingman.battlemap.mapfeatures;
 
+import me.cyclingman.battlemap.BattleMap;
 import me.cyclingman.battlemap.ultils.Teams;
 import me.cyclingman.battlemap.ultils.ColorCaster;
 import org.bukkit.*;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
-import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
+import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.scoreboard.Team;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
-public class ControlPoint implements Listener {
+public class ControlPoint extends MapFeature {
 
-    private final BossBar bossBar;
-    private final ArmorStand point;
+    private BossBar bossBar;
     private final String name;
     private Team owner;
+    private final String defaultOwnerName;
     private Team activeCapturer;
-    private final Collection<Team> allowedCapturers;
+    private final List<String> allowedCapturers;
     private int captureScore;
     private final int maxScore;
-    private final int maxCapSpeed;
     private final double radius;
+    private BukkitTask task;
+    private final int maxCapSpeed = 3;
     private static final int decaySpeed = 1;
 
-    public ControlPoint(ArmorStand point, String name, Team owner, Collection<Team> allowedCapturers, int maxScore, double radius) {
-        this.point = point;
+    public ControlPoint(Location location, String name, String defaultOwnerName, List<String> allowedCapturers, int maxScore, double radius) {
+        super(location);
         this.name = name;
-        this.owner = owner;
+        this.defaultOwnerName = defaultOwnerName;
         this.allowedCapturers = allowedCapturers;
-        this.captureScore = 0;
         this.maxScore = maxScore;
         this.radius = radius;
-        this.maxCapSpeed = 3;
-        this.bossBar = Bukkit.createBossBar(ColorCaster.toChatColor(owner.color()) + name, ColorCaster.toBarColor(owner.color()), BarStyle.SOLID);
-        bossBar.setVisible(true);
-        bossBar.setProgress(0);
     }
 
-    public void removePlayerFromBossbar(Player p) {
+    @Override
+    public void removePlayer(Player p) {
         bossBar.removePlayer(p);
     }
 
-    public void addPlayerToBossbar(Player p) {
+    @Override
+    public void addPlayer(Player p) {
         bossBar.addPlayer(p);
     }
 
+    @Override
+    public void activate() {
+        owner = Teams.getTeam(defaultOwnerName);
+        captureScore = 0;
+        activeCapturer = null;
+        bossBar = Bukkit.createBossBar(ColorCaster.toChatColor(owner.color()) + name, ColorCaster.toBarColor(owner.color()), BarStyle.SOLID);
+        bossBar.setVisible(true);
+        bossBar.setProgress(0);
+
+        task = Bukkit.getScheduler().runTaskTimer(BattleMap.plugin, () -> processCapture(), 0, 1);
+    }
+
+    @Override
     public void deactivate() {
         bossBar.removeAll();
+        bossBar.setVisible(false);
+        task.cancel();
     }
 
     public void processCapture() {
@@ -114,16 +128,16 @@ public class ControlPoint implements Listener {
      * @return Hashmap with teams and amount of players per team.
      */
     private HashMap<Team, Integer> getPlayersOnPointPerTeam() {
-        Collection<Player> players = point.getLocation()
+        Collection<Player> players = location
                 .getNearbyPlayers(radius)
                 .stream()
-                .filter(p -> p.getLocation().distance(point.getLocation()) <= radius)
+                .filter(p -> p.getLocation().distance(location) <= radius)
                 .toList();
 
         HashMap<Team, Integer> teamMap = new HashMap<>();
 
-        for(Team team: allowedCapturers) {
-            teamMap.put(team, 0);
+        for(String team: allowedCapturers) {
+            teamMap.put(Teams.getTeam(team), 0);
         }
         teamMap.putIfAbsent(owner, 0);
 
@@ -157,7 +171,6 @@ public class ControlPoint implements Listener {
     }
 
     private void showParticles(Color color) {
-        Location location = point.getLocation();
         for (int d = 0; d <= 90; d += 1) {
             Location particleLoc = new Location(location.getWorld(), location.getX(), location.getY(), location.getZ());
             particleLoc.setX(location.getX() + Math.cos(d) * radius);

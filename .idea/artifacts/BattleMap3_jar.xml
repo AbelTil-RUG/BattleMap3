@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="BattleMap3:jar">
+    <output-path>$USER_HOME$/Documents/PaperMC Server/plugins</output-path>
+    <root id="archive" name="BattleMap3.jar">
+      <element id="module-output" name="BattleMap3" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/google/code/gson/gson/2.10/gson-2.10.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/net/kyori/text-serializer-legacy/3.0.0/text-serializer-legacy-3.0.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/net/kyori/text-serializer-gson/3.0.0/text-serializer-gson-3.0.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/net/kyori/text-api/3.0.3/text-api-3.0.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/checkerframework/checker-qual/3.21.0/checker-qual-3.21.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/net/kyori/text-adapter-bukkit/3.0.3/text-adapter-bukkit-3.0.3.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
