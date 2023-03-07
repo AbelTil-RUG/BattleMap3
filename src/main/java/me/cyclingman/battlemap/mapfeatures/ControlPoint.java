@@ -16,22 +16,20 @@ import java.util.List;
 
 public class ControlPoint extends MapFeature {
 
-    private BossBar bossBar;
-    private final String name;
-    private Team owner;
+    private transient BossBar bossBar;
+    private transient Team owner;
     private final String defaultOwnerName;
-    private Team activeCapturer;
+    private transient Team activeCapturer;
     private final List<String> allowedCapturers;
-    private int captureScore;
+    private transient int captureScore;
     private final int maxScore;
     private final double radius;
-    private BukkitTask task;
-    private final int maxCapSpeed = 3;
+    private transient BukkitTask task;
+    private static final int maxCapSpeed = 3;
     private static final int decaySpeed = 1;
 
     public ControlPoint(Location location, String name, String defaultOwnerName, List<String> allowedCapturers, int maxScore, double radius) {
-        super(location);
-        this.name = name;
+        super(location, "ControlPoint", name);
         this.defaultOwnerName = defaultOwnerName;
         this.allowedCapturers = allowedCapturers;
         this.maxScore = maxScore;
@@ -57,7 +55,7 @@ public class ControlPoint extends MapFeature {
         bossBar.setVisible(true);
         bossBar.setProgress(0);
 
-        task = Bukkit.getScheduler().runTaskTimer(BattleMap.plugin, () -> processCapture(), 0, 1);
+        task = Bukkit.getScheduler().runTaskTimer(BattleMap.plugin, this::processCapture, 0, 1);
     }
 
     @Override

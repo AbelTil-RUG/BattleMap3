@@ -4,27 +4,26 @@ import me.cyclingman.battlemap.gamemodes.Gamemode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
 public class Map implements Serializable {
-    private transient Gamemode gamemode;
-    private int id;
+    @Serial
+    private static final long serialVersionUID = -1681012206529286330L;
+    private Gamemode gamemode;
     private String name;
     private Location location;
     private transient List<Player> players;
 
-    public Map(String name, Location location, MapCatalog catalog) {
+    public Map(String name, Location location, Gamemode gamemode) {
         this.name = name;
         this.location = location;
+        this.gamemode = gamemode;
     }
 
     public Gamemode getGamemode() {
         return gamemode;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public String getName() {
@@ -38,4 +37,5 @@ public class Map implements Serializable {
     public List<Player> getPlayers() {
         return players;
     }
+
 }

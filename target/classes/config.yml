@@ -1,1 +1,2 @@
-savePath: 'C:\Users\abelv\Documents\PaperMC Server\plugins\BattleMap\save.txt'
+savePath: 'C:\Users\abelv\Documents\PaperMC Server\plugins\BattleMap'
+defaultSaveName: 'defaultSave'

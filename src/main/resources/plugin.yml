@@ -5,10 +5,20 @@ api-version: 1.19
 authors: [Cyclingman]
 description: Team based pvp game modes
 commands:
-  saves:
-    description: loader and saver
-    usage: either /saves save or /saves load
+  catalog:
+    description: Create, save, load, delete and show catalogs.
+    usage: /<command> [create,save,load,delete,list] ...
 
-  controlPoint:
+  map:
+    description: create, retrieve and remove maps from catalog
+    usage: /<command>
+
+  feature:
+    description: retrieve and remove features from a map
+    usage: /<command>
+
+
+
+  controlpoint:
     description: Create a new control point.
-    usage: /<command> create [name] [radius] [captureTime] [mapNumber] OR /controlpoint modify name/radius/captureTime/mapNumber [value]
+    usage: /<command>
