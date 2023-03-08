@@ -149,5 +149,5 @@ Gamemode <-- CTF
 | ^           | goto       | <mapName\>                | Tp to specified map.                                   | -                                        |
 |/feature     | delete     | <mapName\> <featureName\> | Delete the specified feature in specified map.         | -                                        |
 | ^           | list       | <mapName\>                | Display list of features for specified map.            | -                                        |
-| ^           | goto       | <mapName\> <featureName\> | Tp to specified feature.                               | -                                        |
+| ^           | goto       | <mapName\> <featureName\> | Tp to specified feature in a map.                      | -                                        |
 |/controlpoint| create     | <mapName\> <featureName\> <captureTime\> <radius\> | Create a new control point    | Some settings are defined by map's gamemode|

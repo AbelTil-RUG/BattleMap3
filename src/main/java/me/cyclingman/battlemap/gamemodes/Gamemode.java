@@ -1,8 +1,8 @@
 package me.cyclingman.battlemap.gamemodes;
 
 import me.cyclingman.battlemap.mapfeatures.MapFeature;
-import org.bukkit.entity.Player;
-
+import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -35,16 +35,29 @@ public abstract class Gamemode implements Serializable {
         features.add(feature);
     }
 
-    public void removeFeature(int index) {
-        features.remove(index);
+    public MapFeature getFeature(String featureName) {
+        for (MapFeature feature : features) {
+            if (feature.getName().equalsIgnoreCase(featureName)) {
+                return feature;
+            }
+        }
+        return null;
     }
 
-    public void printFeatures(Player recipient) {
-        int i = 0;
-        recipient.sendMessage("Features in map.");
+    public boolean removeFeature(String featureName) {
+        for (MapFeature feature : features) {
+            if (feature.getName().equalsIgnoreCase(featureName)) {
+                features.remove(feature);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void printFeatures(CommandSender recipient) {
+        recipient.sendMessage(ChatColor.BOLD + "Features in map.");
         for(MapFeature feature: features) {
-            i++;
-            recipient.sendMessage("(" + i + ") " + feature.getClass().toString() + ": " + feature.getName());
+            recipient.sendMessage(" - " + feature.getClass().toString() + ": " + feature.getName());
         }
     }
 

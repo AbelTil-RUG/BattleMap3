@@ -28,6 +28,10 @@ public abstract class MapFeature implements Serializable {
 
     public abstract void removePlayer(Player p);
 
+    public Location getLocation() {
+        return location;
+    }
+
     public String getName() {
         return name;
     }

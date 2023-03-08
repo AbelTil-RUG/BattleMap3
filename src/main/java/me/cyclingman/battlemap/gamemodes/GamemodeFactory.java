@@ -23,14 +23,14 @@ public class GamemodeFactory {
     public static final String DEATH_MATCH_FULL = "Death match";
     public static final String DEATH_MATCH_SHORT = "dm";
 
-    public static void printGamemodes(CommandSender sender) {
-        sender.sendMessage(ChatColor.BOLD + "Currently implemented gamemodes:");
-        sender.sendMessage(createGamemodeListItem(CONQUEST_FULL, CONQUEST_SHORT));
-        sender.sendMessage(createGamemodeListItem(KING_OF_THE_HILL_FULL, KING_OF_THE_HILL_SHORT));
-        sender.sendMessage(createGamemodeListItem(CAPTURE_THE_FLAG_FULL, CAPTURE_THE_FLAG_SHORT));
-        sender.sendMessage(createGamemodeListItem(SPECIAL_DELIVERY_FULL, SPECIAL_DELIVERY_SHORT));
-        sender.sendMessage(createGamemodeListItem(CONTROL_POINTS_FULL, CONTROL_POINTS_SHORT));
-        sender.sendMessage(createGamemodeListItem(DEATH_MATCH_FULL, DEATH_MATCH_SHORT));
+    public static void printGamemodes(CommandSender recipient) {
+        recipient.sendMessage(ChatColor.BOLD + "Currently implemented gamemodes:");
+        recipient.sendMessage(createGamemodeListItem(CONQUEST_FULL, CONQUEST_SHORT));
+        recipient.sendMessage(createGamemodeListItem(KING_OF_THE_HILL_FULL, KING_OF_THE_HILL_SHORT));
+        recipient.sendMessage(createGamemodeListItem(CAPTURE_THE_FLAG_FULL, CAPTURE_THE_FLAG_SHORT));
+        recipient.sendMessage(createGamemodeListItem(SPECIAL_DELIVERY_FULL, SPECIAL_DELIVERY_SHORT));
+        recipient.sendMessage(createGamemodeListItem(CONTROL_POINTS_FULL, CONTROL_POINTS_SHORT));
+        recipient.sendMessage(createGamemodeListItem(DEATH_MATCH_FULL, DEATH_MATCH_SHORT));
     }
 
     public static Gamemode createGamemode(String gamemodeName) {

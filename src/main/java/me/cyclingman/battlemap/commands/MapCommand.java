@@ -50,6 +50,7 @@ public class MapCommand implements CommandExecutor {
                 gotoCommand(sender, Arrays.stream(args).skip(1L).toArray(String[]::new));
                 return true;
         }
+
         return false;
     }
 
@@ -92,7 +93,7 @@ public class MapCommand implements CommandExecutor {
             if (success) {
                 sender.sendMessage(ChatColor.GREEN + "Map successfully removed");
             } else {
-                sender.sendMessage(ChatColor.RED + "Could not remove map. Was the name correct?");
+                sender.sendMessage(ChatColor.RED + "Could not remove map. Is the name correct?");
             }
         } else {
             sender.sendMessage(ChatColor.RED + "Usage: /map delete <mapName>");

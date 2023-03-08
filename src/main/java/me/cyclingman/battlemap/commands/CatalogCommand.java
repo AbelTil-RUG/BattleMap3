@@ -43,6 +43,7 @@ public class CatalogCommand implements CommandExecutor {
                 listCommand(sender);
                 return true;
         }
+
         return false;
     }
 

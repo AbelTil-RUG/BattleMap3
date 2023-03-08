@@ -15,7 +15,7 @@ commands:
 
   feature:
     description: retrieve and remove features from a map
-    usage: /<command>
+    usage: /<command> [delete, list, goto]
 
 
 
