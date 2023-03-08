@@ -9,18 +9,16 @@ import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.scoreboard.Team;
-
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 
 public class ControlPoint extends MapFeature {
 
     private transient BossBar bossBar;
     private transient Team owner;
-    private final String defaultOwnerName;
+    private String defaultOwnerName;
     private transient Team activeCapturer;
-    private final List<String> allowedCapturers;
+    private Collection<String> allowedCapturers;
     private transient int captureScore;
     private final int maxScore;
     private final double radius;
@@ -28,12 +26,18 @@ public class ControlPoint extends MapFeature {
     private static final int maxCapSpeed = 3;
     private static final int decaySpeed = 1;
 
-    public ControlPoint(Location location, String name, String defaultOwnerName, List<String> allowedCapturers, int maxScore, double radius) {
+    public ControlPoint(Location location, String name, int maxScore, double radius) {
         super(location, name);
-        this.defaultOwnerName = defaultOwnerName;
-        this.allowedCapturers = allowedCapturers;
         this.maxScore = maxScore;
         this.radius = radius;
+    }
+
+    public void setDefaultOwnerName(String defaultOwnerName) {
+        this.defaultOwnerName = defaultOwnerName;
+    }
+
+    public void setAllowedCapturers(Collection<String> allowedCapturers) {
+        this.allowedCapturers = allowedCapturers;
     }
 
     @Override

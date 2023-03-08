@@ -18,7 +18,7 @@ public class Catalog implements Serializable {
     private static final long serialVersionUID = -1681012206529286330L;
 
     public static final String SUFFIX = ".bms";
-    private List<Map> maps;
+    private final List<Map> maps;
 
     public Catalog() {
         this.maps = new ArrayList<>();
@@ -57,6 +57,12 @@ public class Catalog implements Serializable {
             }
         }
         return null;
+    }
+
+    public void deactivate() {
+        for (Map map : maps) {
+            map.getGamemode().deactivate();
+        }
     }
 
     public boolean save(String fileName) {

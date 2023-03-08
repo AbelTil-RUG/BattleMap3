@@ -49,6 +49,12 @@ public class MapCommand implements CommandExecutor {
             case "goto":
                 gotoCommand(sender, Arrays.stream(args).skip(1L).toArray(String[]::new));
                 return true;
+            case "join":
+                joinCommand(sender, Arrays.stream(args).skip(1L).toArray(String[]::new));
+                return true;
+            case "leave":
+                leaveCommand(sender, Arrays.stream(args).skip(1L).toArray(String[]::new));
+                return true;
         }
 
         return false;
@@ -111,7 +117,12 @@ public class MapCommand implements CommandExecutor {
 
     private void activateCommand(CommandSender sender, String[] args) {
         if (args.length == 1) {
-            plugin.getCatalog().getMap(args[0]).getGamemode().activate();
+            Map map = plugin.getCatalog().getMap(args[0]);
+            if (map == null) {
+                sender.sendMessage(ChatColor.RED + "Map does not exist. Is the name correct?");
+                return;
+            }
+            map.getGamemode().activate();
             sender.sendMessage(ChatColor.GREEN + "Map is (re)activated");
         } else {
             sender.sendMessage(ChatColor.RED + "Usage: /map activate <mapName>");
@@ -121,7 +132,12 @@ public class MapCommand implements CommandExecutor {
 
     private void deactivateCommand(CommandSender sender, String[] args) {
         if (args.length == 1) {
-            plugin.getCatalog().getMap(args[0]).getGamemode().deactivate();
+            Map map = plugin.getCatalog().getMap(args[0]);
+            if (map == null) {
+                sender.sendMessage(ChatColor.RED + "Map does not exist. Is the name correct?");
+                return;
+            }
+            map.getGamemode().deactivate();
             sender.sendMessage(ChatColor.GREEN + "Map is deactivated.");
         } else {
             sender.sendMessage(ChatColor.RED + "Usage: /map deactivate <mapName>");
@@ -149,6 +165,52 @@ public class MapCommand implements CommandExecutor {
                 sender.sendMessage(ChatColor.GREEN + "TP successful.");
             } else {
                 sender.sendMessage(ChatColor.RED + "Usage: /map goto <mapName>");
+                sender.sendMessage(ChatColor.RED + "For a list of maps do /map list");
+            }
+        } else {
+            sender.sendMessage(ChatColor.RED + "This command can only be executed as a player.");
+        }
+    }
+
+    private void joinCommand(CommandSender sender, String[] args) {
+        if (sender instanceof Player p) {
+            if (args.length == 1) {
+                Map map = plugin.getCatalog().getMap(args[0]);
+                if (map == null) {
+                    sender.sendMessage(ChatColor.RED + "Provided map does not exist.");
+                    return;
+                }
+                if (map.getGamemode().addPlayer(p)) {
+                    sender.sendMessage(ChatColor.GREEN + "Joined successfully.");
+                } else {
+                    sender.sendMessage(ChatColor.RED + "Could not join, is the map enabled?");
+                }
+
+            } else {
+                sender.sendMessage(ChatColor.RED + "Usage: /map join <mapName>");
+                sender.sendMessage(ChatColor.RED + "For a list of maps do /map list");
+            }
+        } else {
+            sender.sendMessage(ChatColor.RED + "This command can only be executed as a player.");
+        }
+    }
+
+    private void leaveCommand(CommandSender sender, String[] args) {
+        if (sender instanceof Player p) {
+            if (args.length == 1) {
+                Map map = plugin.getCatalog().getMap(args[0]);
+                if (map == null) {
+                    sender.sendMessage(ChatColor.RED + "Provided map does not exist.");
+                    return;
+                }
+                if (map.getGamemode().removePlayer(p)) {
+                    sender.sendMessage(ChatColor.GREEN + "Left successfully.");
+                } else {
+                    sender.sendMessage(ChatColor.RED + "Could not leave, is the map enabled?");
+                }
+
+            } else {
+                sender.sendMessage(ChatColor.RED + "Usage: /map join <mapName>");
                 sender.sendMessage(ChatColor.RED + "For a list of maps do /map list");
             }
         } else {

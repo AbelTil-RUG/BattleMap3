@@ -34,13 +34,13 @@ public final class BattleMap extends JavaPlugin {
         getCommand("feature").setExecutor(new FeatureCommand(this));
         getCommand("map").setExecutor(new MapCommand(this));
         getCommand("catalog").setExecutor(new CatalogCommand(this));
-        getCommand("teleport").setExecutor(new TPCommand());
 
     }
 
     @Override
     public void onDisable() {
         catalog.save(getConfig().getString("defaultSaveName"));
+        catalog.deactivate();
     }
 
     public Catalog getCatalog() {

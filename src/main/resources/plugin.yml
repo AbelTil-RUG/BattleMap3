@@ -6,22 +6,17 @@ authors: [Cyclingman]
 description: Team based pvp game modes
 commands:
   catalog:
-    description: Create, save, load, delete and show catalogs.
+    description: Modify catalog saves.
     usage: /<command> [create, save, load, delete, list] ...
 
   map:
-    description: create, retrieve and remove maps from catalog
-    usage: /<command> [create, delete, update, activate, deactivate, list, gamemodes, goto]
+    description: Modify maps within current catalog.
+    usage: /<command> [create, delete, update, activate, deactivate, list, gamemodes, goto, join]
 
   feature:
-    description: retrieve and remove features from a map
+    description: Modify features within a map.
     usage: /<command> [delete, list, goto]
-
-
 
   controlpoint:
     description: Create a new control point.
-    usage: /<command>
-
-  teleport:
-    description: tp to other world
+    usage: /<command> create
