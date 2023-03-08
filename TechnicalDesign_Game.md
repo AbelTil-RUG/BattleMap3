@@ -130,23 +130,24 @@ Gamemode <-- CTF
 
 ### Catalog
 
-|base    | path       | argument                  | description                                            | comment                                  |
-| ----   |------------|---------------------------|--------------------------------------------------------|------------------------------------------|
-|/catalog| create     | confirm                   | Replace current catalog with a new catalog.            | -                                        |
-| ^      | save       | <fileName\>               | Save current catalog as \<fileName>.                   | if name is left empty, use default name. |
-| ^      | load       | <fileName\>               | Load catalog with name \<fileName>.                    | if name is left empty, use default name. |
-| ^      | delete     |                           | Delete catalog with name \<fileName>.                  | -                                        |
-| ^      | list       | -                         | Display list of available catalogs.                    | -                                        |
-|/map    | create     | <mapName\> <gamemode\>    | Create a new map at your location with given gamemode. | mapName must be unique                   |
-| ^      | delete     | <mapName\>                | Delete the specified map.                              | -                                        |
-| ^      | update     | <mapName\> <mapName\>     | Update name of specified map to new name.              | New mapName must be unique               |
-| ^      | ^          | <mapName\> <gamemode\>    | Update gamemode of specified map to other gamemode.    | -                                        |
-| ^      | activate   | <mapName\>                | Activate specified map.                                | Cannot activate active map.              |
-| ^      | deactivate | <mapName\>                | Deactivate specified map.                              | Cannot deactivate deactivated map.       |
-| ^      | list       | -                         | Display list of all maps.                              | -                                        |
-| ^      | goto       | <mapName\>                | Tp to specified map.                                   | -                                        |
-|/feature| add        | <mapName\> <featureName\> | Add unassigned feature to specified map.               | -                                        |
-| ^      | delete     | <mapName\> <featureName\> | Delete the specified feature in specified map.         | -                                        |
-| ^      | list       | <mapName\>                | Display list of features for that map.                 | -                                        |
-| ^      | ^          | -                         | Display list of unassigned features.                   | -                                        |
-| ^      | goto       | <mapName\> <featureName\> | Tp to specified feature.                               | -                                        |
+|base         | path       | arguments                 | description                                            | comment                                  |
+|-------------|------------|---------------------------|--------------------------------------------------------|------------------------------------------|
+|/catalog     | create     | confirm                   | Replace current catalog with a new catalog.            | -                                        |
+| ^           | save       | <fileName\>               | Save current catalog with specified name.              | if name is left empty, use default name. |
+| ^           | load       | <fileName\>               | Load specified catalog.                                | if name is left empty, use default name. |
+| ^           | delete     | -                         | Delete specified catalog.                              | -                                        |
+| ^           | list       | -                         | Display list of available catalogs.                    | -                                        |
+|/map         | create     | <mapName\> <gamemode\>    | Create a new map at your location with given gamemode. | mapName must be unique, location is set to current location|
+| ^           | delete     | <mapName\>                | Delete the specified map.                              | -                                        |
+| ^           | update     | <mapName\> <mapName\>     | Update name of specified map to new name.              | New mapName must be unique               |
+| ^           | ^          | <mapName\> <gamemode\>    | Update gamemode of specified map to other gamemode.    | -                                        |
+| ^           | ^          | <mapName\> location       | Update location of specified map to current location.  | -                                        |
+| ^           | activate   | <mapName\>                | Activate specified map.                                | Cannot activate active map.              |
+| ^           | deactivate | <mapName\>                | Deactivate specified map.                              | Cannot deactivate deactivated map.       |
+| ^           | list       | -                         | Display list of all maps.                              | -                                        |
+| ^           | gamemodes  | -                         | Get a list of available gamemodes                      | -                                        |
+| ^           | goto       | <mapName\>                | Tp to specified map.                                   | -                                        |
+|/feature     | delete     | <mapName\> <featureName\> | Delete the specified feature in specified map.         | -                                        |
+| ^           | list       | <mapName\>                | Display list of features for specified map.            | -                                        |
+| ^           | goto       | <mapName\> <featureName\> | Tp to specified feature.                               | -                                        |
+|/controlpoint| create     | <mapName\> <featureName\> <captureTime\> <radius\> | Create a new control point    | Some settings are defined by map's gamemode|

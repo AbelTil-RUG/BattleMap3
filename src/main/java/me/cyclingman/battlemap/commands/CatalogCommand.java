@@ -2,6 +2,7 @@ package me.cyclingman.battlemap.commands;
 
 import me.cyclingman.battlemap.BattleMap;
 import me.cyclingman.battlemap.Catalog;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -25,57 +26,52 @@ public class CatalogCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (args.length < 1) return false;
 
-        if (args[0].equalsIgnoreCase("create")) {
-            return createCommand(sender, Arrays.stream(args).skip(1L).toArray(String[]::new));
+        switch (args[0].toLowerCase()) {
+            case "create":
+                createCommand(sender, Arrays.stream(args).skip(1L).toArray(String[]::new));
+                return true;
+            case "save":
+                saveCommand(sender, Arrays.stream(args).skip(1L).toArray(String[]::new));
+                return true;
+            case "load":
+                loadCommand(sender, Arrays.stream(args).skip(1L).toArray(String[]::new));
+                return true;
+            case "delete":
+                deleteCommand(sender, Arrays.stream(args).skip(1L).toArray(String[]::new));
+                return true;
+            case "list":
+                listCommand(sender);
+                return true;
         }
-
-        if (args[0].equalsIgnoreCase("save")) {
-            return saveCommand(sender, Arrays.stream(args).skip(1L).toArray(String[]::new));
-        }
-
-        if (args[0].equalsIgnoreCase("load")) {
-            return loadCommand(sender, Arrays.stream(args).skip(1L).toArray(String[]::new));
-        }
-
-        if (args[0].equalsIgnoreCase("delete")) {
-            return deleteCommand(sender, Arrays.stream(args).skip(1L).toArray(String[]::new));
-        }
-
-        if (args[0].equalsIgnoreCase("list")) {
-            return listCommand(sender);
-        }
-
         return false;
     }
 
-    private boolean createCommand(CommandSender sender, String[] args) {
+    private void createCommand(CommandSender sender, String[] args) {
         if (args.length > 0 && args[0].equalsIgnoreCase("confirm")) {
             plugin.setCatalog(new Catalog());
-            sender.sendMessage("Created new catalog.");
-            return true;
+            sender.sendMessage(ChatColor.GREEN + "Created new catalog.");
         } else {
-            sender.sendMessage("Are you sure you want to overwrite the current catalog?");
-            sender.sendMessage(" To confirm, please type /catalog create confirm");
-            return true;
+            sender.sendMessage(ChatColor.YELLOW + "Are you sure you want to overwrite the current catalog?");
+            sender.sendMessage(ChatColor.YELLOW + " To confirm, please type /catalog create confirm");
         }
     }
-    private boolean saveCommand(CommandSender sender, String[] args) {
+    private void saveCommand(CommandSender sender, String[] args) {
         String fileName;
         if (args.length < 1) {
             fileName = plugin.getConfig().getString("defaultSaveName");
+            sender.sendMessage(ChatColor.YELLOW + "Warning: Save might be overwritten when server closes.");
         } else {
             fileName = args[0];
         }
 
         if (plugin.getCatalog().save(fileName)) {
-            sender.sendMessage("Successfully saved catalog.");
+            sender.sendMessage(ChatColor.GREEN + "Successfully saved catalog.");
         } else {
-            sender.sendMessage("Failed to save catalog. Look at server log to find potential problem.");
+            sender.sendMessage(ChatColor.RED + "Failed to save catalog. Look at server log to find potential problem.");
         }
-        return true;
     }
 
-    private boolean loadCommand(CommandSender sender, String[] args) {
+    private void loadCommand(CommandSender sender, String[] args) {
         String fileName;
         if (args.length < 1) {
             fileName = plugin.getConfig().getString("defaultSaveName");
@@ -84,14 +80,13 @@ public class CatalogCommand implements CommandExecutor {
         }
 
         if (Catalog.load(fileName)) {
-            sender.sendMessage("Successfully loaded catalog.");
+            sender.sendMessage(ChatColor.GREEN + "Successfully loaded catalog.");
         } else {
-            sender.sendMessage("Failed to load catalog. Look at server log to find potential problem.");
+            sender.sendMessage(ChatColor.RED + "Failed to load catalog. Look at server log to find potential problem.");
         }
-        return true;
     }
 
-    private boolean deleteCommand(CommandSender sender, String[] args) {
+    private void deleteCommand(CommandSender sender, String[] args) {
         if (args.length > 1 && args[1].equalsIgnoreCase("confirm")) {
             String fileName = args[0];
 
@@ -101,28 +96,24 @@ public class CatalogCommand implements CommandExecutor {
 
             File myObj = new File(plugin.getConfig().getString("savePath") + File.separator + fileName);
             if (myObj.delete()) {
-                sender.sendMessage("Sucessfully deleted file.");
+                sender.sendMessage(ChatColor.GREEN + "Sucessfully deleted file.");
             } else {
-                sender.sendMessage("Failed to delete file.");
+                sender.sendMessage(ChatColor.RED + "Failed to delete file.");
             }
-            return true;
         } else {
-            sender.sendMessage("Are you sure you want to overwrite the current catalog?");
-            sender.sendMessage(" To confirm, please type /catalog delete <fileName> confirm");
-            return true;
+            sender.sendMessage(ChatColor.YELLOW + "Are you sure you want to overwrite the current catalog?");
+            sender.sendMessage(ChatColor.YELLOW + " To confirm, please type /catalog delete <fileName> confirm");
         }
-
     }
 
-    private boolean listCommand(CommandSender sender) {
+    private void listCommand(CommandSender sender) {
         File folder = new File(Objects.requireNonNull(plugin.getConfig().getString("savePath")));
         File[] listOfFiles = folder.listFiles();
-        sender.sendMessage("All available files:");
+        sender.sendMessage(ChatColor.BOLD + "All available files:");
         for (File file: listOfFiles) {
             if (file.isFile() && file.getName().endsWith(Catalog.SUFFIX)) {
-                sender.sendMessage(file.getName());
+                sender.sendMessage(" - " + file.getName());
             }
         }
-        return true;
     }
 }

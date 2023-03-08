@@ -44,7 +44,7 @@ public abstract class Gamemode implements Serializable {
         recipient.sendMessage("Features in map.");
         for(MapFeature feature: features) {
             i++;
-            recipient.sendMessage("(" + i + ") " + feature.getFeatureName() + ": " + feature.getName());
+            recipient.sendMessage("(" + i + ") " + feature.getClass().toString() + ": " + feature.getName());
         }
     }
 

@@ -1,10 +1,9 @@
 package me.cyclingman.battlemap;
 
-import me.cyclingman.battlemap.commands.ControlPointCommand;
-import me.cyclingman.battlemap.commands.MapCommand;
-import me.cyclingman.battlemap.commands.FeatureCommand;
-import me.cyclingman.battlemap.commands.CatalogCommand;
+import me.cyclingman.battlemap.commands.*;
 import me.cyclingman.battlemap.ultils.Teams;
+import org.bukkit.Bukkit;
+import org.bukkit.WorldCreator;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class BattleMap extends JavaPlugin {
@@ -23,6 +22,8 @@ public final class BattleMap extends JavaPlugin {
         getConfig().options().copyDefaults();
         saveDefaultConfig();
 
+        Bukkit.createWorld(new WorldCreator("BattleMap2.0"));
+
 
         if (!Catalog.load(getConfig().getString("defaultSaveName"))) {
             catalog = new Catalog();
@@ -30,9 +31,10 @@ public final class BattleMap extends JavaPlugin {
 
         //register the commands
         getCommand("controlpoint").setExecutor(new ControlPointCommand(this));
-        getCommand("mapfeature").setExecutor(new FeatureCommand(this));
+        getCommand("feature").setExecutor(new FeatureCommand(this));
         getCommand("map").setExecutor(new MapCommand(this));
         getCommand("catalog").setExecutor(new CatalogCommand(this));
+        getCommand("teleport").setExecutor(new TPCommand());
 
     }
 

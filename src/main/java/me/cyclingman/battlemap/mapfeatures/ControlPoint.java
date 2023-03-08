@@ -29,7 +29,7 @@ public class ControlPoint extends MapFeature {
     private static final int decaySpeed = 1;
 
     public ControlPoint(Location location, String name, String defaultOwnerName, List<String> allowedCapturers, int maxScore, double radius) {
-        super(location, "ControlPoint", name);
+        super(location, name);
         this.defaultOwnerName = defaultOwnerName;
         this.allowedCapturers = allowedCapturers;
         this.maxScore = maxScore;

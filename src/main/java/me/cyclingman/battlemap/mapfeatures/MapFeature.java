@@ -12,12 +12,11 @@ public abstract class MapFeature implements Serializable {
     private static final long serialVersionUID = -1681012206529286330L;
     protected Location location;
     protected transient boolean isActive = false;
-    protected String name;
-    protected String featureName;
 
-    public MapFeature(Location location, String featureName, String name) {
+    protected String name;
+
+    public MapFeature(Location location, String name) {
         this.location = location;
-        this.featureName = featureName;
         this.name = name;
     }
 
@@ -28,10 +27,6 @@ public abstract class MapFeature implements Serializable {
     public abstract void addPlayer(Player p);
 
     public abstract void removePlayer(Player p);
-
-    public String getFeatureName() {
-        return featureName;
-    }
 
     public String getName() {
         return name;

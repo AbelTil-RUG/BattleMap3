@@ -1,7 +1,8 @@
 package me.cyclingman.battlemap;
 
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
+import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.util.io.BukkitObjectInputStream;
 import org.bukkit.util.io.BukkitObjectOutputStream;
 
@@ -23,23 +24,29 @@ public class Catalog implements Serializable {
         this.maps = new ArrayList<>();
     }
 
-    public void addMap(Map map) {
-        maps.add(map);
-    }
-
-    public void removeMap(int id) {
-        if (id >= maps.size()) {
-            return;
+    public boolean addMap(Map map) {
+        if (getMap(map.getName()) == null) {
+            maps.add(map);
+            return true;
+        } else {
+            return false;
         }
-        maps.remove(id);
     }
 
-    public void printMaps(Player recipient) {
-        int i = 0;
-        recipient.sendMessage("Maps in catalog:");
+    public boolean removeMap(String mapName) {
         for (Map map : maps) {
-            i++;
-            recipient.sendMessage("(" + i + ") " + map.getName());
+            if (map.getName().equalsIgnoreCase(mapName)) {
+                maps.remove(map);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void printMaps(CommandSender recipient) {
+        recipient.sendMessage(ChatColor.BOLD + "Maps in catalog:");
+        for (Map map : maps) {
+            recipient.sendMessage(" - " + map.getName());
         }
     }
 
